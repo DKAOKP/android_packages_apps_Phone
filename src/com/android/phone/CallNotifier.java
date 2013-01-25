@@ -29,16 +29,16 @@ import com.android.internal.telephony.cdma.CdmaCallWaitingNotification;
 import com.android.internal.telephony.cdma.CdmaInformationRecords.CdmaDisplayInfoRec;
 import com.android.internal.telephony.cdma.CdmaInformationRecords.CdmaSignalInfoRec;
 import com.android.internal.telephony.cdma.SignalToneUtil;
-import com.android.internal.telephony.CallManager;
-import com.android.phone.CallFeaturesSetting;
 
 import android.app.ActivityManagerNative;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothHeadset;
 import android.bluetooth.BluetoothProfile;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
+import android.media.VibrationPattern;
 import android.net.Uri;
 import android.os.AsyncResult;
 import android.os.Handler;
@@ -569,6 +569,8 @@ public class CallNotifier extends Handler
         if (shouldStartQuery) {
             // Reset the ringtone to the default first.
             mRinger.setCustomRingtoneUri(Settings.System.DEFAULT_RINGTONE_URI);
+            String vibUriString = VibrationPattern.getPhoneVibration(mApplication);
+            mRinger.setCustomVibrationUri(Uri.parse(vibUriString));
 
             // query the callerinfo to try to get the ringer.
             PhoneUtils.CallerInfoToken cit = PhoneUtils.startGetCallerInfo(
@@ -949,6 +951,13 @@ public class CallNotifier extends Handler
                     Ringer r = ((CallNotifier) cookie).mRinger;
                     r.setCustomRingtoneUri(ci.contactRingtoneUri);
                 }
+
+                // set the vibration uri to prepare for the ring.
+                if (ci.contactVibrationUri != null) {
+                    if (DBG) log("custom vibration found, setting up ringer.");
+                    Ringer r = ((CallNotifier) cookie).mRinger;
+                    r.setCustomVibrationUri(ci.contactVibrationUri);
+                }
                 // ring, and other post-ring actions.
                 onCustomRingQueryComplete();
             }
@@ -1288,15 +1297,6 @@ public class CallNotifier extends Handler
             // *should* be blocked at the telephony layer on non-voice-capable
             // capable devices.)
             Log.w(LOG_TAG, "Got onMwiChanged() on non-voice-capable device! Ignoring...");
-            return;
-        }
-
-        boolean notifProp = mApplication.getResources().getBoolean(R.bool.sprint_mwi_quirk);
-        boolean notifOption = Settings.System.getInt(mApplication.getPhone().getContext().getContentResolver(), Settings.System.ENABLE_MWI_NOTIFICATION, 0) == 1;
-        if (notifProp && !notifOption) {
-            // sprint_mwi_quirk is true, and ENABLE_MWI_NOTIFICATION is unchecked or unset (false)
-            // ignore the mwi event, but log if we're debugging.
-            if (VDBG) log("onMwiChanged(): mwi_notification is disabled. Ignoring...");
             return;
         }
 

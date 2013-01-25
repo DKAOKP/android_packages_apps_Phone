@@ -167,10 +167,6 @@
     <string name="settings_label">Network settings</string>
     <!-- Call settings screen, setting option name -->
     <string name="voicemail">Voicemail</string>
-    <!-- Call settings screen, message wait indicator name -->
-    <string name="mwi_notification_title">Message Wait Indicator</string>
-    <!-- Call settings screen, message wait indicator summary -->
-    <string name="mwi_notification_summary">Show message wait indicator voicemail notifications</string>
     <!-- Call forwarding dialog box, voicemail number prefix -->
     <string name="voicemail_abbreviated">VM:</string>
     <!-- Mobile network settings screen, setting option name -->
@@ -656,6 +652,10 @@
     <string name="tty_mode_option_summary">Set TTY mode</string>
     <string name="auto_retry_mode_title">Auto-retry</string>
     <string name="auto_retry_mode_summary">Enable Auto-retry mode</string>
+    <string name="exit_to_home_screen_title">Exit to Last Activity on End Call</string>
+    <string name="exit_to_home_screen_summary">Exit to Previous activity screen on End Call rather than going to Call Log</string>
+    <string name="landscape_mode_title">Enable Landscape</string>
+    <string name="landscape_mode_summary">Enable Landscape Mode (if sensor enabled)</string>
 
     <!-- FDN list screen: menu item label -->
     <string name="menu_add">Add contact</string>
@@ -1090,9 +1090,6 @@
     <!-- Title displayed above settings coming after voicemail in the call features screen -->
     <string name="other_settings">Other call settings</string>
 
-    <!-- Label for onscreen "Dial" button used in the EmergencyDialer -->
-    <string name="dial_button_label">Dial</string>
-
     <!-- Dialer UI Settings -->
     <string name="dialer_ui_settings_title">Dialpad settings</string>
     <string name="dialer_ui_settings_summary">Settings for the dialpad</string>
@@ -1483,6 +1480,7 @@
 
     <!-- Setting option name to pick ringtone (a list dialog comes up). [CHAR LIMIT=30] -->
     <string name="ringtone_title" msgid="5379026328015343686">Phone ringtone</string>
+    <string name="vibration_title">Phone vibration</string>
 
     <!-- Setting option name to enable or disable vibration when ringing
          the phone.
@@ -1496,4 +1494,16 @@
     <!-- Title for the category "ringtone", which is shown above ringote settings
          [CHAR LIMIT=40] -->
     <string name="preference_category_ringtone">Ringtone</string>
+
+    <!-- CYANOGENMOD ADDITIONS START -->
+
+    <!-- Mobile network settings screen, setting check box name -->
+    <string name="national_roaming">National data roaming</string>
+    <!-- Mobile network settings screen, setting summary text when check box is selected -->
+    <string name="national_roaming_enable">Connect to data services when nationally roaming</string>
+    <!-- Mobile network settings screen, setting summary text when check box is clear -->
+    <string name="national_roaming_disable">Connect to data services when nationally roaming</string>
+
+    <!-- CYANOGENMOD ADDITIONS END -->
+
 </resources>
